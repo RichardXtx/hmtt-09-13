@@ -23,13 +23,13 @@
         v-model="form.code"
         type="password"
         name="code"
-        label="密码"
+        label="验证码"
         required
-        placeholder="密码"
+        placeholder="验证码"
         :rules="[
           {
             required: true,
-            message: '请填写密码',
+            message: '请填写验证码',
             trigger: 'onChange',
             pattern: /^\d{6}$/,
           },
@@ -45,6 +45,7 @@
 </template>
 
 <script>
+import { Toast } from 'vant'
 export default {
   name: 'login-vue',
   data () {
@@ -56,8 +57,15 @@ export default {
     }
   },
   methods: {
-    onSubmit (form) {
-      this.$store.dispatch('asyncToken', this.form)
+    async onSubmit () {
+      try {
+        await this.$store.dispatch('asyncToken', this.form)
+        this.$router.push('/')
+        Toast.success('登录成功!')
+      } catch (error) {
+        // console.log('cuowu', error)
+        // Toast.fail('别乱输入啊')
+      }
     }
   }
 }

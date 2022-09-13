@@ -1,5 +1,6 @@
 // 封装axios
 import axios from 'axios'
+import { Toast } from 'vant'
 
 // 实例化
 const instance = axios.create({
@@ -24,6 +25,8 @@ instance.interceptors.response.use(response => {
   return response.data
 }, error => {
   // Do something with response error
+  // console.log('拦截器', error)
+  Toast.fail(error.response.data.message)
   return Promise.reject(error)
 })
 

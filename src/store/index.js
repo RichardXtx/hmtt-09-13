@@ -2,17 +2,19 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import { fetchLogin } from '@/api'
+import { getToken, setToken } from '@/utils/ls'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    token: ''
+    token: getToken() || ''
   },
 
   mutations: {
     setToken (state, newToken) {
       state.token = newToken
+      setToken(newToken)
     }
   },
   actions: {
