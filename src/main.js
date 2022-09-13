@@ -7,6 +7,11 @@ import Vant from 'vant'
 import 'vant/lib/index.css'
 
 import 'amfe-flexible'
+
+// 测试接口函数
+import { fetchAllChannels } from '@/api/index'
+
+fetchAllChannels().then(res => console.log(res))
 Vue.use(Vant)
 
 Vue.config.productionTip = false
