@@ -5,19 +5,35 @@
     <!-- 表单 -->
     <van-form @submit="onSubmit">
       <van-field
-        v-model="form.username"
-        name="username"
-        label="用户名"
-        placeholder="用户名"
-        :rules="[{ required: true, message: '请填写用户名' }]"
+        v-model="form.mobile"
+        name="mobile"
+        label="手机号"
+        required
+        placeholder="手机号"
+        :rules="[
+          {
+            required: true,
+            message: '请填写手机号',
+            trigger: 'onChange',
+            pattern: /^1[3456789]\d{9}$/,
+          },
+        ]"
       />
       <van-field
-        v-model="form.password"
+        v-model="form.code"
         type="password"
-        name="password"
+        name="code"
         label="密码"
+        required
         placeholder="密码"
-        :rules="[{ required: true, message: '请填写密码' }]"
+        :rules="[
+          {
+            required: true,
+            message: '请填写密码',
+            trigger: 'onChange',
+            pattern: /^\d{6}$/,
+          },
+        ]"
       />
       <div style="margin: 16px">
         <van-button round block type="info" native-type="submit"
@@ -34,14 +50,14 @@ export default {
   data () {
     return {
       form: {
-        username: 'yyyy',
-        password: '333'
+        mobile: '13811111111',
+        code: '246810'
       }
     }
   },
   methods: {
     onSubmit (form) {
-      console.log('表单提交了', form)
+      this.$store.dispatch('asyncToken', this.form)
     }
   }
 }
