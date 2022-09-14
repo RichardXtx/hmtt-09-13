@@ -3,7 +3,6 @@
     <!-- 标题区域的插槽 -->
     <template #title>
       <!-- 无图模式 -->
-
       <div class="title-box" v-if="item.cover.type === 0">
         <!-- 标题 -->
         <span>{{ item.title }}</span>
@@ -33,7 +32,7 @@
         <div>
           <span>{{ item.aut_name }}</span>
           <span>{{ item.comm_count }}评论</span>
-          <span>{{ item.pubdate }}</span>
+          <span>{{ formatTime(item.pubdate) }}</span>
         </div>
       </div>
     </template>
@@ -41,6 +40,7 @@
 </template>
 
 <script>
+import { formatTimerApi } from '@/utils/time'
 export default {
   props: {
     item: {
@@ -49,6 +49,10 @@ export default {
         return {}
       }
     }
+  },
+  methods: {
+    formatTime: formatTimerApi
+
   }
 }
 </script>
