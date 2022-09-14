@@ -1,15 +1,16 @@
 <template>
   <div>
-    <van-tabs v-model="active">
-      <van-tab v-for="item in channelList" :key="item.id" :title="item.name">{{
-        item.name
-      }}</van-tab>
+    <van-tabs v-model="active" color="#1989fa">
+      <van-tab v-for="item in channelList" :key="item.id" :title="item.name"
+        ><article-list :channelId="item.id"
+      /></van-tab>
     </van-tabs>
   </div>
 </template>
 
 <script>
 import { getchGetchannels } from '@/api'
+import ArticleList from './components/article-list.vue'
 export default {
   name: 'home-index',
   data () {
@@ -18,6 +19,7 @@ export default {
       channelList: []
     }
   },
+  components: { ArticleList },
   methods: {
     async getchGetchannel () {
       const res = await getchGetchannels()
@@ -32,7 +34,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-/deep/ .van-tabs__line {
-  background-color: #1989fa !important;
-}
+// /deep/ .van-tabs__line {
+//   background-color: #1989fa !important;
+// }
 </style>

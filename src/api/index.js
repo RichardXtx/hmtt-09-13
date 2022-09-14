@@ -30,3 +30,14 @@ export function getchGetchannels () {
     url: '/v1_0/channels'
   })
 }
+
+// 文章 - 获取列表
+export const articlesListAPI = ({ channelId, timestamp }) => {
+  return request({
+    url: '/v1_0/articles',
+    params: {
+      channel_id: channelId,
+      timestamp
+    }
+  })
+}
