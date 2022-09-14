@@ -1,11 +1,20 @@
 <template>
   <div class="article-list">
-    <!-- 文章列表 -->
-    <article-list-item
-      v-for="item in articleList"
-      :key="item.id"
-      :item="item"
-    />
+    <!-- 上拉加载 -->
+    <van-list
+      v-model="loading"
+      :finished="finished"
+      finished-text="没有更多了"
+      @load="onLoad"
+      :immediate-check="false"
+    >
+      <!-- 文章列表 -->
+      <article-list-item
+        v-for="item in articleList"
+        :key="item.id"
+        :item="item"
+      />
+    </van-list>
   </div>
 </template>
 
@@ -17,7 +26,10 @@ export default {
   name: 'article-list',
   data () {
     return {
-      articleList: []
+      articleList: [],
+      loading: false,
+      finished: false,
+      pre_timestamp: +new Date()
     }
   },
   props: {
@@ -29,15 +41,38 @@ export default {
     this.getArticlesList()
   },
   methods: {
-    async getArticlesList () {
+    async getArticlesList () { // 获取文章列表
       const res = await articlesListAPI(
         {
           channelId: this.channelId,
-          timestamp: +new Date()
+          timestamp: this.pre_timestamp
         }
       )
-      console.log(res)
+      // console.log(res)
       this.articleList = res.data.results
+    },
+    async onLoad () { // 上拉刷新函数
+      // console.log('开始加载')
+      const res = await articlesListAPI(
+        {
+          channelId: this.channelId,
+          timestamp: this.pre_timestamp
+        }
+      )
+
+      // 老数据加上新数据，赋值给 articleList 数组
+      this.articleList = [...this.articleList, ...res.data.results]
+
+      // 更新时间戳，为下一次上拉做准备
+      this.pre_timestamp = res.data.pre_timestamp
+
+      // 更新完刷新的数据后，将 loading 改为 false，继续执行下次刷新
+      this.loading = false
+
+      // 如果全部数据都没了，就将 finished 改为 true
+      if (!this.pre_timestamp) {
+        this.finished = true
+      }
     }
   },
   components: {
