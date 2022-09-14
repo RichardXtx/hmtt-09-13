@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="article-list">
     <!-- 文章列表 -->
     <article-list-item
       v-for="item in articleList"
@@ -47,5 +47,12 @@ export default {
 }
 </script>
 
-<style>
+<style scoped lang="less">
+.article-list {
+  position: fixed;
+  width: 100%;
+  top: 42px;
+  bottom: 52px;
+  overflow: scroll;
+}
 </style>
