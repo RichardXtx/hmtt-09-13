@@ -23,3 +23,10 @@ export function fetchLogin ({ mobile, code }) {
     }
   })
 }
+
+// 获取所有频道列表
+export function getchGetchannels () {
+  return request({
+    url: '/v1_0/channels'
+  })
+}
