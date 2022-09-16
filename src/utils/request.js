@@ -15,7 +15,9 @@ const instance = axios.create({
 instance.interceptors.request.use(config => {
   // Do something before request is sent
   const token = getToken()
-  config.headers.Authorization = `Bearer ${token}`
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`
+  }
   return config
 }, error => {
   // Do something with request error
