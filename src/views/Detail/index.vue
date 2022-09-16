@@ -64,7 +64,7 @@
           >已点赞</van-button
         >
         <van-button
-          v-else-if="articleList.attitude === 0 || articleList.attitude === -1"
+          v-else
           icon="good-job-o"
           type="danger"
           plain
@@ -115,8 +115,8 @@ export default {
       if (this.articleList.attitude === 1) {
         // 取消点赞
         unLikeDetaileAPI(this.articleList.art_id)
-        this.articleList.attitude = 0
-      } else if (this.articleList.attitude === 0 || -1) {
+        this.articleList.attitude = -1
+      } else if (this.articleList.attitude === -1) {
         // 点赞
         likeDetailAPI(this.articleList.art_id)
         this.articleList.attitude = 1
