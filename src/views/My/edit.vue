@@ -4,7 +4,7 @@
     <van-nav-bar
       title="编辑资料"
       left-arrow
-      @click-left="$router.back()"
+      @click-left="$router.push('/my')"
       fixed
     />
 
@@ -28,8 +28,8 @@
           />
         </template>
       </van-cell>
-      <van-cell title="名称" is-link />
-      <van-cell title="生日" is-link />
+      <van-cell title="名称" :value="profile.name" is-link />
+      <van-cell title="生日" :value="profile.birthday" is-link />
     </van-cell-group>
   </div>
 </template>
@@ -56,7 +56,7 @@ export default {
     uploadImg () { // 触发 input
       this.$refs.uploadFile.click()
     },
-    async changeImg (e) {
+    async changeImg (e) { // 图片改变事件
       // console.log(e)
       const file = e.target.files[0]
       // console.log(file)
