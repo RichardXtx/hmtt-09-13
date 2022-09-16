@@ -115,12 +115,11 @@ export default {
       if (this.articleList.attitude === 1) {
         // 取消点赞
         unLikeDetaileAPI(this.articleList.art_id)
-        this.articleList.attitude = -1
       } else if (this.articleList.attitude === -1) {
         // 点赞
         likeDetailAPI(this.articleList.art_id)
-        this.articleList.attitude = 1
       }
+      this.articleList.attitude = this.articleList.attitude * -1
     }
   }
 }
