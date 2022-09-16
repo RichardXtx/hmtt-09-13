@@ -1,20 +1,23 @@
 <template>
   <div class="article-list">
-    <!-- 上拉加载 -->
-    <van-list
-      v-model="loading"
-      :finished="finished"
-      finished-text="没有更多了"
-      @load="onLoad"
-      :immediate-check="false"
-    >
-      <!-- 文章列表 -->
-      <article-list-item
-        v-for="item in articleList"
-        :key="item.id"
-        :item="item"
-      />
-    </van-list>
+    <!-- 下拉刷新 -->
+    <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+      <!-- 上拉加载 -->
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        finished-text="没有更多了"
+        @load="onLoad"
+        :immediate-check="false"
+      >
+        <!-- 文章列表 -->
+        <article-list-item
+          v-for="item in articleList"
+          :key="item.id"
+          :item="item"
+        />
+      </van-list>
+    </van-pull-refresh>
   </div>
 </template>
 
@@ -29,7 +32,8 @@ export default {
       articleList: [],
       loading: false,
       finished: false,
-      pre_timestamp: +new Date()
+      pre_timestamp: +new Date(),
+      isLoading: false
     }
   },
   props: {
@@ -73,6 +77,17 @@ export default {
       if (!this.pre_timestamp) {
         this.finished = true
       }
+    },
+    async onRefresh () { // 下拉刷新
+      // console.log('下拉刷新了')
+      this.pre_timestamp = +new Date()
+      await articlesListAPI(
+        {
+          channelId: this.channelId,
+          timestamp: this.pre_timestamp
+        }
+      )
+      this.isLoading = false
     }
   },
   components: {
