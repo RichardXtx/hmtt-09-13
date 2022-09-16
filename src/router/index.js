@@ -4,8 +4,11 @@ import VueRouter from 'vue-router'
 // 打包优化 =》 改为import形式 按需加载
 import Login from '@/views/Login'
 import Layout from '@/views/Layout'
+import Detail from '@/views/Detail'
+
 import My from '@/views/My'
 import Home from '@/views/Home'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -26,6 +29,10 @@ const routes = [
         component: Home
       }
     ]
+  },
+  {
+    path: '/detail',
+    component: Detail
   }
 ]
 

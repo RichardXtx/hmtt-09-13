@@ -13,8 +13,9 @@
         <!-- 文章列表 -->
         <article-list-item
           v-for="item in articleList"
-          :key="item.id"
+          :key="item.art_id"
           :item="item"
+          @click.native="particulars(item.art_id)"
         />
       </van-list>
     </van-pull-refresh>
@@ -88,6 +89,14 @@ export default {
         }
       )
       this.isLoading = false
+    },
+    particulars (id) { // 跳转到详情
+      this.$router.push({
+        path: '/detail',
+        query: {
+          id
+        }
+      })
     }
   },
   components: {
