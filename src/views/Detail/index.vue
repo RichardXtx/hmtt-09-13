@@ -11,17 +11,33 @@
     <!-- 文章信息区域 -->
     <div class="article-container">
       <!-- 文章标题 -->
-      <h1 class="art-title">小程序</h1>
+      <h1 class="art-title">{{ articleList.title }}</h1>
 
       <!-- 用户信息 -->
-      <van-cell center title="张三" label="3天前">
+      <van-cell
+        center
+        :title="articleList.aut_name"
+        :label="formatTime(articleList.pubdate)"
+      >
         <template #icon>
-          <img src="" alt="" class="avatar" />
+          <img :src="articleList.aut_photo" alt="" class="avatar" />
         </template>
         <template #default>
           <div>
-            <van-button type="info" size="mini">已关注</van-button>
-            <van-button icon="plus" type="info" size="mini" plain
+            <van-button
+              type="info"
+              v-if="articleList.is_followed"
+              @click="allow"
+              size="mini"
+              >已关注</van-button
+            >
+            <van-button
+              icon="plus"
+              @click="allow"
+              v-else
+              type="info"
+              size="mini"
+              plain
               >关注</van-button
             >
           </div>
@@ -32,7 +48,7 @@
       <van-divider></van-divider>
 
       <!-- 文章内容 -->
-      <div class="art-content">好好学习, 天天向上</div>
+      <div class="art-content" v-html="articleList.content"></div>
 
       <!-- 分割线 -->
       <van-divider>End</van-divider>
@@ -51,8 +67,40 @@
 </template>
 
 <script>
+import { articleDetailAPI, fetchAllowAPI, fetchUnAllowAPI } from '@/api'
+import { formatTimerApi } from '@/utils/time'
+import { Toast } from 'vant'
 export default {
-  name: 'detail-index'
+  name: 'detail-index',
+  data () {
+    return {
+      articleList: {}
+    }
+  },
+  created () {
+    this.getArticleDetail()
+  },
+  methods: {
+    async getArticleDetail () { // 获取文章详情
+      const id = this.$route.query.id
+      const res = await articleDetailAPI(id)
+      this.articleList = res.data
+      // console.log(res)
+    },
+    formatTime: formatTimerApi,
+    allow () {
+      if (this.articleList.is_followed) {
+        // 取关
+        fetchUnAllowAPI(this.articleList.aut_id)
+        Toast.success('取关成功!')
+      } else {
+        // 关注
+        fetchAllowAPI(this.articleList.aut_id)
+        Toast.success('关注成功!')
+      }
+      this.articleList.is_followed = !this.articleList.is_followed
+    }
+  }
 }
 </script>
 

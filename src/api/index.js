@@ -41,3 +41,29 @@ export const articlesListAPI = ({ channelId, timestamp }) => {
     }
   })
 }
+
+// 文章 - 文章详情
+export function articleDetailAPI (id) {
+  return request({
+    url: `/v1_0/articles/${id}`
+  })
+}
+
+//  文章 - 关注
+export function fetchAllowAPI (target) {
+  return request({
+    url: '/v1_0/user/followings',
+    method: 'post',
+    data: {
+      target
+    }
+  })
+}
+
+// 文章 - 取关
+export function fetchUnAllowAPI (target) {
+  return request({
+    url: `/v1_0/user/followings/${target}`,
+    method: 'delete'
+  })
+}
