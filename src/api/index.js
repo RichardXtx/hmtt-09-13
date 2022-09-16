@@ -93,3 +93,19 @@ export function getUserAPI () {
     url: '/v1_0/user'
   })
 }
+
+// 获取用户个人简介
+export function getUserPorfileAPI () {
+  return request({
+    url: '/v1_0/user/profile'
+  })
+}
+
+// 上传用户头像
+export function uploadImagesAPI (data) {
+  return request({
+    url: '/v1_0/user/photo',
+    method: 'patch',
+    data
+  })
+}

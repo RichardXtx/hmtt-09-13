@@ -5,6 +5,7 @@ import VueRouter from 'vue-router'
 import Login from '@/views/Login'
 import Layout from '@/views/Layout'
 import Detail from '@/views/Detail'
+import EditUser from '@/views/My/edit'
 
 import My from '@/views/My'
 import Home from '@/views/Home'
@@ -33,6 +34,10 @@ const routes = [
   {
     path: '/detail',
     component: Detail
+  },
+  {
+    path: '/editUser',
+    component: EditUser
   }
 ]
 
