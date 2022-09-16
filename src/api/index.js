@@ -67,3 +67,22 @@ export function fetchUnAllowAPI (target) {
     method: 'delete'
   })
 }
+
+// 文章 - 点赞
+export function likeDetailAPI (target) {
+  return request({
+    url: '/v1_0/article/likings',
+    method: 'post',
+    data: {
+      target
+    }
+  })
+}
+
+// 文章 - 取消点赞
+export function unLikeDetaileAPI (target) {
+  return request({
+    url: `/v1_0/article/likings/${target}`,
+    method: 'delete'
+  })
+}

@@ -55,10 +55,21 @@
 
       <!-- 点赞 -->
       <div class="like-box">
-        <van-button icon="good-job" type="danger" size="small"
+        <van-button
+          icon="good-job"
+          type="danger"
+          size="small"
+          v-if="articleList.attitude === 1"
+          @click="like"
           >已点赞</van-button
         >
-        <van-button icon="good-job-o" type="danger" plain size="small"
+        <van-button
+          v-else-if="articleList.attitude === 0 || articleList.attitude === -1"
+          icon="good-job-o"
+          type="danger"
+          plain
+          size="small"
+          @click="like"
           >点赞</van-button
         >
       </div>
@@ -67,7 +78,7 @@
 </template>
 
 <script>
-import { articleDetailAPI, fetchAllowAPI, fetchUnAllowAPI } from '@/api'
+import { articleDetailAPI, fetchAllowAPI, fetchUnAllowAPI, likeDetailAPI, unLikeDetaileAPI } from '@/api'
 import { formatTimerApi } from '@/utils/time'
 import { Toast } from 'vant'
 export default {
@@ -88,7 +99,7 @@ export default {
       // console.log(res)
     },
     formatTime: formatTimerApi,
-    allow () {
+    allow () { // 点击关注
       if (this.articleList.is_followed) {
         // 取关
         fetchUnAllowAPI(this.articleList.aut_id)
@@ -99,6 +110,17 @@ export default {
         Toast.success('关注成功!')
       }
       this.articleList.is_followed = !this.articleList.is_followed
+    },
+    like () {
+      if (this.articleList.attitude === 1) {
+        // 取消点赞
+        unLikeDetaileAPI(this.articleList.art_id)
+        this.articleList.attitude = 0
+      } else if (this.articleList.attitude === 0 || -1) {
+        // 点赞
+        likeDetailAPI(this.articleList.art_id)
+        this.articleList.attitude = 1
+      }
     }
   }
 }
