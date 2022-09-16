@@ -54,6 +54,7 @@ export default {
         }
       )
       // console.log(res)
+      this.pre_timestamp = res.data.pre_timestamp
       this.articleList = res.data.results
     },
     async onLoad () { // 上拉刷新函数
