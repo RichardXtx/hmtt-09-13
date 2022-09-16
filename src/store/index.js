@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import { fetchLogin } from '@/api'
-import { getToken, setToken } from '@/utils/ls'
+import { getToken, removeToken, setToken } from '@/utils/ls'
 
 Vue.use(Vuex)
 
@@ -15,6 +15,10 @@ export default new Vuex.Store({
     setToken (state, newToken) {
       state.token = newToken
       setToken(newToken)
+    },
+    clearToken (state) {
+      state.token = ''
+      removeToken()
     }
   },
   actions: {

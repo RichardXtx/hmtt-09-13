@@ -60,7 +60,12 @@ export default {
     async onSubmit () {
       try {
         await this.$store.dispatch('asyncToken', this.form)
-        this.$router.push('/')
+        const redirect = this.$route.query.redirect
+        if (redirect) {
+          this.$router.push(redirect)
+        } else {
+          this.$router.push('/')
+        }
         Toast.success('登录成功!')
       } catch (error) {
         // console.log('cuowu', error)

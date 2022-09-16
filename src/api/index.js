@@ -86,3 +86,10 @@ export function unLikeDetaileAPI (target) {
     method: 'delete'
   })
 }
+
+// 我的 - 获取用户基本资料
+export function getUserAPI () {
+  return request({
+    url: '/v1_0/user'
+  })
+}
