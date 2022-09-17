@@ -121,3 +121,13 @@ export function changeUserAPI ({ name, birthday }) {
     }
   })
 }
+
+// 搜索 - 联想建议
+export function suggestionAPI (q) {
+  return request({
+    url: '/v1_0/suggestion',
+    params: {
+      q
+    }
+  })
+}
