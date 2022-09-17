@@ -9,7 +9,12 @@
     />
     <!-- 搜索联想区域 -->
     <div class="sugg-list">
-      <div class="sugg-item" v-for="item in associateList" :key="item">
+      <div
+        class="sugg-item"
+        v-for="item in associateList"
+        :key="item"
+        @click="toResult(item)"
+      >
         <span v-html="hightLight(item)"></span>
       </div>
     </div>
@@ -29,15 +34,25 @@ export default {
   },
 
   methods: {
+
     searchValue: _.debounce(async function () { // 防抖
       if (this.keyword === '') return
-      const res = await suggestionAPI({ q: this.keyword })
-      this.suggestList = res.data.options
+      const res = await suggestionAPI(this.keyword)
+      // console.log(res)
+      this.associateList = res.data.options
     }, 400),
     hightLight (item) { // 高亮
       const reg = new RegExp(this.keyword, 'ig')
       return item?.replace(reg, keys => {
         return `<span style="color:skyblue">${keys}</span>`
+      })
+    },
+    toResult (item) {
+      this.$router.push({
+        path: '/result',
+        query: {
+          q: item
+        }
       })
     }
   }

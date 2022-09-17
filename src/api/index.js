@@ -131,3 +131,15 @@ export function suggestionAPI (q) {
     }
   })
 }
+
+// 结果页面
+export function searchResultAPI ({ page, q }) {
+  return request({
+    url: '/v1_0/search',
+    params: {
+      page,
+      q
+    }
+
+  })
+}

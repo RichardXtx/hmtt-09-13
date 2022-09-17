@@ -6,6 +6,7 @@ import Login from '@/views/Login'
 import Layout from '@/views/Layout'
 import Detail from '@/views/Detail'
 import EditUser from '@/views/My/edit'
+import Result from '@/views/Result'
 
 import My from '@/views/My'
 import Home from '@/views/Home'
@@ -43,6 +44,10 @@ const routes = [
   {
     path: '/editUser',
     component: EditUser
+  },
+  {
+    path: '/result',
+    component: Result
   }
 ]
 
