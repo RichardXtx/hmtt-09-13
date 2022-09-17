@@ -9,6 +9,7 @@ import EditUser from '@/views/My/edit'
 
 import My from '@/views/My'
 import Home from '@/views/Home'
+import Search from '@/views/Search'
 
 Vue.use(VueRouter)
 
@@ -28,6 +29,10 @@ const routes = [
       {
         path: '',
         component: Home
+      },
+      {
+        path: 'search',
+        component: Search
       }
     ]
   },

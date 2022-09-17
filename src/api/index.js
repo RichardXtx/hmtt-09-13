@@ -109,3 +109,15 @@ export function uploadImagesAPI (data) {
     data
   })
 }
+
+// 更新用户信息
+export function changeUserAPI ({ name, birthday }) {
+  return request({
+    url: '/v1_0/user/profile',
+    method: 'patch',
+    data: {
+      name,
+      birthday
+    }
+  })
+}
