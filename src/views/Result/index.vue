@@ -9,12 +9,21 @@
       fixed
     />
 
-    <!-- 结果 -->
-    <ArticleListItem
-      :item="item"
-      v-for="item in resultList"
-      :key="item.art_id"
-    />
+    <!-- 上拉刷新 -->
+    <van-list
+      v-model="loading"
+      :finished="finished"
+      finished-text="没有更多了"
+      @load="onLoad"
+      :immediate-check="false"
+    >
+      <!-- 结果 -->
+      <ArticleListItem
+        :item="item"
+        v-for="item in resultList"
+        :key="item.art_id"
+      />
+    </van-list>
   </div>
 </template>
 
@@ -26,7 +35,9 @@ export default {
   data () {
     return {
       resultList: [], // 结果列表
-      page: 1
+      page: 1,
+      loading: false,
+      finished: false
     }
   },
   components: { ArticleListItem },
@@ -34,10 +45,21 @@ export default {
     this.searchResult()
   },
   methods: {
-    async searchResult () {
+    async searchResult () { // 获取结果，并渲染
+      const res = await searchResultAPI({ page: this.page, q: this.$route.query.q })
+      // console.log(res)
+      this.resultList = res.data.results
+    },
+    async onLoad () {
+      // console.log(1)
+      this.page++
       const res = await searchResultAPI({ page: this.page, q: this.$route.query.q })
       console.log(res)
-      this.resultList = res.data.results
+      this.resultList = [...this.resultList, ...res.data.results]
+      this.loading = false
+      if (res.data.results.length === 0) {
+        this.finished = true
+      }
     }
   }
 }
