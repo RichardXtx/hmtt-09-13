@@ -22,6 +22,7 @@
         :item="item"
         v-for="item in resultList"
         :key="item.art_id"
+        @click.native="details(item.art_id)"
       />
     </van-list>
   </div>
@@ -60,6 +61,14 @@ export default {
       if (res.data.results.length === 0) {
         this.finished = true
       }
+    },
+    details (id) {
+      this.$router.push({
+        path: '/detail',
+        query: {
+          id
+        }
+      })
     }
   }
 }
