@@ -18,22 +18,22 @@
 
 <script>
 import { suggestionAPI } from '@/api'
+import _ from 'lodash'
 export default {
   name: 'search-index',
   data () {
     return {
       keyword: '', // 关键字
-      associateList: []
+      associateList: [] // 联想框数据
     }
   },
 
   methods: {
-    async searchValue () { // input 框事件
+    searchValue: _.debounce(async function () { // 防抖
       if (this.keyword === '') return
-      const res = await suggestionAPI(this.keyword)
-      // console.log(res)
-      this.associateList = res.data.options
-    },
+      const res = await suggestionAPI({ q: this.keyword })
+      this.suggestList = res.data.options
+    }, 400),
     hightLight (item) { // 高亮
       const reg = new RegExp(this.keyword, 'ig')
       return item?.replace(reg, keys => {
