@@ -18,6 +18,20 @@
         <span v-html="hightLight(item)"></span>
       </div>
     </div>
+
+    <!-- 搜索历史区 -->
+    <div class="history" v-show="associateList.length === 0">
+      <van-tag
+        class="tag"
+        plain
+        type="primary"
+        v-for="item in historyList"
+        :key="item"
+        @click="toResult(item)"
+      >
+        {{ item }}
+      </van-tag>
+    </div>
   </div>
 </template>
 
@@ -29,7 +43,8 @@ export default {
   data () {
     return {
       keyword: '', // 关键字
-      associateList: [] // 联想框数据
+      associateList: [], // 联想框数据
+      historyList: JSON.parse(localStorage.getItem('ceshiHistory')) || []
     }
   },
 
@@ -48,6 +63,11 @@ export default {
       })
     },
     toResult (item) {
+      if (!this.historyList.includes(item)) {
+        this.historyList.push(item)
+        localStorage.setItem('ceshiHistory', JSON.stringify(this.historyList))
+      }
+
       this.$router.push({
         path: '/result',
         query: {
@@ -55,6 +75,14 @@ export default {
         }
       })
     }
+    // toDetail (id) {
+    //   this.$router.push({
+    //     path: '/result',
+    //     query: {
+    //       q: id
+    //     }
+    //   })
+    // }
   }
 }
 </script>
@@ -73,5 +101,11 @@ export default {
     text-overflow: ellipsis;
     color: rgba(0, 0, 0, 0.65);
   }
+}
+.history {
+  margin-left: 17px;
+}
+.tag {
+  margin-right: 10px;
 }
 </style>
