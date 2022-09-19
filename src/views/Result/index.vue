@@ -9,22 +9,24 @@
       fixed
     />
 
-    <!-- 上拉刷新 -->
-    <van-list
-      v-model="loading"
-      :finished="finished"
-      finished-text="没有更多了"
-      @load="onLoad"
-      :immediate-check="false"
-    >
-      <!-- 结果 -->
-      <ArticleListItem
-        :item="item"
-        v-for="item in resultList"
-        :key="item.art_id"
-        @click.native="details(item.art_id)"
-      />
-    </van-list>
+    <div class="scroll-box">
+      <!-- 上拉刷新 -->
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        finished-text="没有更多了"
+        @load="onLoad"
+        :immediate-check="false"
+      >
+        <!-- 结果 -->
+        <ArticleListItem
+          :item="item"
+          v-for="item in resultList"
+          :key="item.art_id"
+          @click.native="details(item.art_id)"
+        />
+      </van-list>
+    </div>
   </div>
 </template>
 
@@ -77,5 +79,12 @@ export default {
 <style lang="less" scoped>
 .search-result-container {
   padding-top: 46px;
+}
+.scroll-box {
+  position: fixed;
+  top: 46px;
+  width: 100%;
+  bottom: 0;
+  overflow: auto;
 }
 </style>
